@@ -28,9 +28,15 @@
     //   'file': '/odoo_17_dependencies.json',
     // },
   ];
+
+  let moduleScanned = 0;
+  let dupDependencies = [];
+
+  let openDepDetails = false;
+  let selectedDepDetails = {};
+  
   let selectedVersion:String;
 
-    let depDetailsElement:HTMLElement;
   let projectFileInput:HTMLElement;
   let projectDirectory = "";
 
@@ -114,6 +120,9 @@
     visited.add(depName);
 
     const immediateDeps = odooMods[depName] || projectMods[depName] || [];
+	if(immediateDeps.length == 0) {
+		console.log("Cant find ", depName);
+	}
 
     let foundDeps = [...immediateDeps];
 
@@ -157,29 +166,9 @@
     return null;
   }
 
-  let moduleScanned = 0;
-  let dupDependencies = [
-    {
-      'target_module': 'modKey',
-      'dependency': 'dep',
-      'source': 'dep',
-      'source_tree': ['dep1', 'dep2', 'dep3', 'dep4']
-    },
-    {
-      'target_module': 'modKey',
-      'dependency': 'dep',
-      'source': 'dep',
-      'source_tree': ['dep1', 'dep2', 'dep3', 'dep4']
-    },
-    {
-      'target_module': 'modKey',
-      'dependency': 'dep',
-      'source': 'dep',
-      'source_tree': ['dep1', 'dep2', 'dep3', 'dep4']
-    },
-  ];
-
   function analyzeDependencies() {
+    moduleScanned = 0;
+    dupDependencies = [];
     loadingText.set('Analyzing dependencies...');
     loading.set(true);
     for (const modKey of Object.keys(projectMods)) {
@@ -210,7 +199,14 @@
       }
     }
     dupDependencies = dupDependencies;
+
+	if(dupDependencies.length == 0) console.log("No Duplicate Deps Found");
     loading.set(false);
+  }
+
+  function showDepDetails(dep) {
+	selectedDepDetails = dep;
+	openDepDetails = true;
   }
 </script>
 
@@ -248,7 +244,8 @@
             <button on:click={()=>{
               loadingText.set("Loading manifest files...");
               loading.set(true);
-              projectFileInput.click()
+              projectFileInput.click();
+			  dupDependencies = [];
             }} class="faded" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;">Browse</button>
             <input
               type="file"
@@ -264,8 +261,8 @@
       </div>
     </div>
   </div>
-  <div class="row" style="flex: 1; justify-content: start; align-items: start;">
-    <div class="col" style="flex: 1; height: 100%;">
+  <div class="row" style="flex: 1; justify-content: start; align-items: start; min-height: 0;">
+    <div class="col" style="flex: 1; height: 100%; min-height: 0;">
       {#if dupDependencies.length > 0}
         <div class="row scanned-dep-stats">
           <div class="row stat-card">
@@ -313,7 +310,9 @@
                     <td><b>{dup.target_module}</b></td>
                     <td><i class="fa-solid fa-box" style="color: var(--faded-text);"/> {dup.dependency}</td>
                     <td>Already provided by <b>{dup.source}</b></td>
-                    <td style="text-align: right;  padding-right: 20px;"><i class="fa-solid fa-arrow-up-right-from-square"/></td>
+                    <td style="text-align: right;  padding-right: 20px;"><i on:click={() => {
+						showDepDetails(dup);
+                    }} class="fa-solid fa-arrow-up-right-from-square"/></td>
                   </tr>
                 {/each}
               </tbody>
@@ -410,14 +409,53 @@
         {/if}
       {/if}
     </div>
-    <div class="dependency-details">
-      <div class="title-section row" style="justify-content: space-between;">
+    <div class="col dependency-details" style="{openDepDetails ? "margin-left: -10px; transform: translate(0, 0);" : ""}">
+      <div class="title-section row" style="justify-content: space-between; background-color: rgb(249 250 251);">
         <p>Dependency Details</p>
-        <i class="fa-solid fa-close"/>
+        <i on:click={()=>{openDepDetails = false;}} class="fa-solid fa-close"/>
       </div>
+	  <div class="col" style="padding: 15px; padding-top: 0;">
+	  	<div>
+			<h2 style="font-size: 16px;">{selectedDepDetails['dependency']}</h2>
+			<p style="font-size: 12px; color: var(--faded-text);">Required by: <b style="color: var(--text);">{selectedDepDetails['target_module']}</b></p>
+		</div>
+		<div>
+			<p style="font-weight: bold; font-size: 11px; color: var(--faded-text);">CONFLICT ANALYSIS</p>
+			<div class="conflict-analysis">
+				<p>This dependency may be unnecessary because it is already inherited through another module in your dependency tree.</p>
+				<div class="col" style="margin-top: 15px;">
+					{#each selectedDepDetails['source_tree'] as depSource, index}
+						<p style="{index == 0 ? "font-weight: bold;" : ""} margin-left: {8 * index}px">
+							{#if index == 0}
+								<i class="fa-solid fa-file-code"/>
+							{:else}
+								<i class="fa-solid fa-arrow-turn-up" style="color: var(--faded-text); rotate: 90deg;"/>
+							{/if}
+							{depSource}
+						</p>
+
+						{#if index == selectedDepDetails['source_tree'].length - 1}
+							<p style="margin-left: {(8 * index) + 8}px">
+								<i class="fa-solid fa-arrow-turn-up" style="color: var(--faded-text); rotate: 90deg;"/>
+								{selectedDepDetails['dependency']}
+							</p>
+						{/if}
+					{/each}
+				</div>
+			</div>
+		</div>
+		<div style="margin-top: 10px;">
+			<p style="font-weight: bold; font-size: 11px; color: var(--faded-text);">SUGGESTED ACTION</p>
+			<div class="suggested-action">
+				<p>Remove <code>'{selectedDepDetails['dependency']}'</code> from the <code>depends</code> list in <code>{selectedDepDetails['target_module']}/__manifest__.py</code></p>
+			</div>
+		</div>
+	  </div>
     </div>
   </div>
 </section>
+
+<!-- {"target_module":"modKey","dependency":"dep","source":"dep","source_tree":["dep1","dep2","dep3","dep4"]} -->
 
 <style>
   section {
@@ -620,6 +658,8 @@
   .dependency-details {
     background-color: white;
     min-width: 250px;
+	max-width: 250px;
+
     height: calc(100% + 10px);
     margin-top: -10px;
     box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.1);
@@ -639,5 +679,42 @@
   .dependency-details .title-section i {
     color: var(--faded-text);
     cursor: pointer;
+  }
+
+  .conflict-analysis {
+	border: 1px solid var(--border);
+	padding: 8px;
+	border-radius: 0.2rem;
+  }
+
+  .conflict-analysis p {
+	font-size: 12px;
+	line-height: 14px;
+  }
+
+  .conflict-analysis div {
+	border-left: 2px solid var(--border);
+	padding-left: 4px;
+  }
+
+  .suggested-action {
+	background-color: rgb(239, 246, 255);
+	color: rgb(30, 64, 175);
+	font-size: 12px;
+	line-height: 20px;
+	border-radius: 0.2rem;
+	padding: 8px;
+	word-wrap: break-word;
+	white-space: normal;
+  }
+
+  .suggested-action code {
+	background-color: white;
+	border: 1px solid rgba(30, 64, 175, 0.25);
+	padding: 1px;
+	padding-left: 2px;
+	padding-right: 2px;
+	white-space: pre-wrap;
+	word-break: break-all;
   }
 </style>
