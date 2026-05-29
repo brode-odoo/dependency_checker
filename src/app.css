@@ -1,0 +1,179 @@
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+}
+
+:root, html, body {
+  --bg: #F0F0F0;
+  --panel: #FFFFFF;
+  --purple: #714B67;
+  --green: rgb(0 160 157);
+  --green-hover: rgb(0 139 136);
+  --faded-white: #ffffffb8;
+  --text: rgb(55 65 81);
+  --faded-text: rgba(55, 65, 81, 0.616);
+  --border: rgb(209 213 219);
+
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  height: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.no-gap {
+  gap: 0px;
+}
+
+h1, h2, h3, h4, p, a {
+  margin: 0px;
+  padding: 0px;
+}
+
+hr {
+  margin: 0px !important;
+  min-height: 1px;
+  max-height: 1px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel {
+  padding: 10px;
+  background-color: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  justify-content: space-between;
+}
+
+progress {
+  width: 100%;
+  height: 13px;
+  border-radius: 10px;
+  overflow: hidden;
+  appearance: none;
+  border: 1px solid var(--border);
+}
+
+progress::-webkit-progress-bar {
+  background: var(--bg);
+}
+
+progress::-webkit-progress-value {
+  background: var(--green);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+progress::-moz-progress-bar {
+  background: var(--green);
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: var(--border);
+  width: 100%;
+  margin: 10px auto;
+  margin-bottom: -10px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button {
+  border: none;
+  outline: none;
+  padding: 8px 16px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all ease-in-out 100ms;
+}
+
+button.faded {
+  color: rgb(75 85 99);
+  background-color: rgb(243 244 246);
+  border: 1px solid var(--border);
+}
+
+button.faded:hover {
+  background-color: rgb(229 231 235);
+}
+
+button.green {
+  background-color: var(--green);
+}
+
+button.green:hover {
+  background-color: var(--green-hover);
+}
+
+button.white {
+  background-color: white;
+  border: 1px solid rgb(240, 240, 240);
+  color: var(--text);
+}
+
+button.white:hover {
+  background-color: rgb(250, 250, 250);
+}
+
+button i {
+  margin-right: 4px;
+}
+
+select, input[type='text'] {
+  border: 1px solid var(--border);
+  outline: none;
+  background-color: white;
+  padding: 8px 16px;
+  border-radius: 0.25rem;
+  color: var(--text);
+}
+
+textarea {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  font-size: small;
+  flex: 1;
+}

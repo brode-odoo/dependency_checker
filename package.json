@@ -1,0 +1,56 @@
+{
+  "name": "Dependency Checker",
+  "private": true,
+  "version": "1.0.7",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "author": "Brandon ODell <brode@odoo.com>",
+  "description": "Simple time tracking desktop app built with Svelte and Electron",
+  "scripts": {
+    "dev": "vite",
+    "electron": "electronmon .",
+    "build": "vite build",
+    "start": "concurrently --kill-others \"npm run dev\" \"npx wait-on http://localhost:5173 && npm run electron\"",
+    "package": "npm run build && electron-builder"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
+    "concurrently": "^9.2.1",
+    "electron": "^41.0.3",
+    "electron-builder": "^26.8.1",
+    "electronmon": "^2.0.4",
+    "svelte": "^5.53.12",
+    "vite": "^8.0.2",
+    "wait-on": "^9.0.4"
+  },
+  "build": {
+    "appId": "com.bluepeakstudios.dependency_checker",
+    "productName": "Odoo Time Tracker",
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "mac": {
+      "icon": "src/assets/icons/icon.icns"
+    },
+    "win": {
+      "icon": "src/assets/icons/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility",
+      "icon": "src/assets/icons"
+    }
+  },
+  "dependencies": {
+    "dirty-json": "^0.9.2",
+    "fs": "^0.0.1-security"
+  }
+}
