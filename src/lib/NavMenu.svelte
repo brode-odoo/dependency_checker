@@ -1,4 +1,7 @@
 <script>
+  import { projectModules } from "../stores/moduleStore";
+  import { localDir, setLocalDir } from "../stores/routeStore";
+
 
 </script>
 
@@ -9,30 +12,36 @@
     </h1>
     <div class="col nav-section analysis" style="gap: 0px;">
         <p class="title">ANALYSIS</p>
-        <button class="selected">
+        <button class="{$localDir == 'checker' ? "selected" : ""}" on:click={() => {
+            setLocalDir('checker');
+        }}>
             <i class="fa-solid fa-magnifying-glass-chart"/>
             Dependency Check
         </button>
-        <button>
-            <i class="fa-solid fa-diagram-project"/>
-            Module Graph
-        </button>
-        <button>
+        {#if Object.keys($projectModules).length > 0}
+            <button class="{$localDir == 'graph' ? "selected" : ""}" on:click={() => {
+                setLocalDir('graph');
+            }}>
+                <i class="fa-solid fa-diagram-project"/>
+                Module Graph
+            </button>
+        {/if}
+        <!-- <button class="{$localDir == 'history' ? "selected" : ""}">
             <i class="fa-solid fa-clock-rotate-left"/>
             History
-        </button>
+        </button> -->
     </div>
-    <div class="nav-section analysis col" style="gap: 0px;">
+    <!-- <div class="nav-section analysis col" style="gap: 0px;">
         <p class="title">CONFIGURATION</p>
-        <button>
+        <button class="{$localDir == 'saved-paths' ? "selected" : ""}">
             <i class="fa-solid fa-folder-tree"/>
             Saved Paths
         </button>
-        <button>
+        <button class="{$localDir == 'settings' ? "selected" : ""}">
             <i class="fa-solid fa-gear"/>
             Settings
         </button>
-    </div>
+    </div> -->
 </section>
 
 <style>

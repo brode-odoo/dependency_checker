@@ -50,7 +50,11 @@
     }
   },
   "dependencies": {
+    "@xyflow/svelte": "^1.5.2",
+    "d3-force": "^3.0.0",
+    "dagre": "^0.8.5",
     "dirty-json": "^0.9.2",
+    "elkjs": "^0.11.1",
     "fs": "^0.0.1-security"
   }
 }

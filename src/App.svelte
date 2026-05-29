@@ -4,6 +4,7 @@
     import NavMenu from './lib/NavMenu.svelte';
     import { get } from 'svelte/store';
     import { loading, loadingText } from './stores/loadingStore';
+  import Graph from './pages/Graph.svelte';
 
     let dir = window.location.hash;
     let showLoading = false;
@@ -14,6 +15,8 @@
 <div class="row" style="height: 100vh; flex-direction: row-reverse; gap: 0px;">
   {#if $localDir == 'checker'}
     <Checker/>
+  {:else if $localDir == 'graph'}
+    <Graph/>
   {/if}
 
   <NavMenu/>
