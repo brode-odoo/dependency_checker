@@ -20,25 +20,25 @@ function createWindow() {
   });
 
   // Use this for production builds
-  // win.loadFile(path.join(__dirname, '../dist/index.html'));
+  win.loadFile(path.join(__dirname, '../dist/index.html'));
 
   // Uncomment this section of code to use for development.
   // Run 'npm run start' to start both the Svelte server and the
   // election application.
-  const devServerUrl = 'http://localhost:5173';
+  // const devServerUrl = 'http://localhost:5173';
 
-  const loadWithRetry = () => {
-    win.loadURL(devServerUrl).catch(() => {
-      // Catching the error here prevents the app from crashing on the first fail
-    });
-  };
+  // const loadWithRetry = () => {
+  //   win.loadURL(devServerUrl).catch(() => {
+  //     // Catching the error here prevents the app from crashing on the first fail
+  //   });
+  // };
 
-  win.webContents.on('did-fail-load', () => {
-    console.log("Server not ready, retrying in 1s...");
-    setTimeout(loadWithRetry, 1000);
-  });
+  // win.webContents.on('did-fail-load', () => {
+  //   console.log("Server not ready, retrying in 1s...");
+  //   setTimeout(loadWithRetry, 1000);
+  // });
 
-  loadWithRetry();
+  // loadWithRetry();
 
   win.on('closed', () => {
     win = null;
