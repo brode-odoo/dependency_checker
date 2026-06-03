@@ -1,7 +1,7 @@
 {
-  "name": "Dependency Checker",
+  "name": "odoo_dep_analyzer",
   "private": true,
-  "version": "1.0.7",
+  "version": "1.0.0",
   "type": "module",
   "main": "electron/main.cjs",
   "author": "Brandon ODell <brode@odoo.com>",
@@ -25,7 +25,7 @@
   },
   "build": {
     "appId": "com.bluepeakstudios.dependency_checker",
-    "productName": "Odoo Time Tracker",
+    "productName": "Odoo Dep Analyzer",
     "files": [
       "dist/**/*",
       "electron/**/*",
