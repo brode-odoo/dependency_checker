@@ -15,7 +15,8 @@ function createWindow() {
     resizable: false,
     webPreferences: {
       contextIsolation: true,
-      preload: path.join(__dirname, './preload.cjs')
+      preload: path.join(__dirname, './preload.cjs'),
+      allowRunningInsecureContent: true
     }
   });
 

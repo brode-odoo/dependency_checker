@@ -7,52 +7,52 @@
     {
       'value': 'odoo_19',
       'name': 'Odoo 19',
-      'file': '/odoo_dependencies_19.0.json',
+      'file': 'odoo_dependencies_19.0.json',
     },
     {
       'value': 'odoo_18',
       'name': 'Odoo 18',
-      'file': '/odoo_dependencies_18.0.json',
+      'file': 'odoo_dependencies_18.0.json',
     },
     {
       'value': 'odoo_17',
       'name': 'Odoo 17',
-      'file': '/odoo_dependencies_17.0.json',
+      'file': 'odoo_dependencies_17.0.json',
     },
     {
       'value': 'odoo_16',
       'name': 'Odoo 16',
-      'file': '/odoo_dependencies_16.0.json',
+      'file': 'odoo_dependencies_16.0.json',
     },
     {
       'value': 'odoo_15',
       'name': 'Odoo 15',
-      'file': '/odoo_dependencies_15.0.json',
+      'file': 'odoo_dependencies_15.0.json',
     },
     {
       'value': 'odoo_14',
       'name': 'Odoo 14',
-      'file': '/odoo_dependencies_14.0.json',
+      'file': 'odoo_dependencies_14.0.json',
     },
     {
       'value': 'odoo_13',
       'name': 'Odoo 13',
-      'file': '/odoo_dependencies_13.0.json',
+      'file': 'odoo_dependencies_13.0.json',
     },
     {
       'value': 'odoo_12',
       'name': 'Odoo 12',
-      'file': '/odoo_dependencies_12.0.json',
+      'file': 'odoo_dependencies_12.0.json',
     },
     {
       'value': 'odoo_11',
       'name': 'Odoo 11',
-      'file': '/odoo_dependencies_11.0.json',
+      'file': 'odoo_dependencies_11.0.json',
     },
     {
       'value': 'odoo_10',
       'name': 'Odoo 10',
-      'file': '/odoo_dependencies_10.0.json',
+      'file': 'app://odoo_dependencies_10.0.json',
     },
     // TODO add a selection for a custom Odoo directory for future/custom versions.
     // This will pull up a directory selector and parse the modules the same way
